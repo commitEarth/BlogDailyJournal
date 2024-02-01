@@ -1,0 +1,33 @@
+<!-- function definition -->
+<%
+function titleCase(str){
+  let ret = str
+    .split("-")
+    .filter(x => x.length > 0)
+    .map((x) => (x.charAt(0).toUpperCase() + x.slice(1)))
+    .join(" ");
+  return ret;
+  }
+  %>
+
+<!-- start of ejs file -->
+
+<% include ./partials/header.ejs %>
+<h1> <%=heading %></h1>
+<p><%=StartingContent %></p>
+
+
+
+<% posts.forEach(function(element){ %>
+  <h1><%=titleCase(element.title) %></h1>
+  <p> <%=element.content.substring(0,100)+ "..." %>
+  <a href="/posts/<%= element.title %>">Read More</a>
+</p>
+
+
+<% }); %>
+<form class="" action="/compose" method="get">
+  <button class="btn btn-lg" type="submit" name="button">+</button>
+
+</form>
+<% include ./partials/footer.ejs %>
