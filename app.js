@@ -5,7 +5,13 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 var _ =require("lodash");
 const mongoose =require("mongoose");
-mongoose.connect("mongodb://127.0.0.1:27017/BlogDB")
+// const url="mongodb://127.0.0.1:27017/BlogDB";//for local db (need to launch mongodb server)
+const url="mongodb+srv://riyan:DSABzBpostZdaPMP@cluster0.vd31u.mongodb.net/";
+
+mongoose
+    .connect(url)
+    .catch (error => console.log(error));
+
 const schema =new mongoose.Schema({
   title:String,
   content:String
@@ -53,7 +59,7 @@ app.get("/compose",function(req,res){
 });
 
 app.get("/posts/:postName",function(req,res){
- 
+
   blog.find({title:(req.params.postName)}).then((doc)=>{
      foundObject=doc[0];
      res.render("post",{head:titleCase(foundObject.title),body:foundObject.content});
